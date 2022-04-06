@@ -74,19 +74,19 @@
         {
           "id": "OPEN",
           "title": "Open",
-          "tasks": [
-            {
-              "id": "ce2eb823-9dbe-4aa5-897f-dae73b89ca56",
-              "title": "asd",
-              "description": "asd",
-              "assignee": "1"
-            }
-          ]
+          "tasks": []
         },
         {
           "id": "IN_PROGRESS",
           "title": "In Progress",
-          "tasks": []
+          "tasks": [
+            {
+              "id": "1649254522647",
+              "title": "выпить чай",
+              "description": "поставить чайник + заварить + выпить",
+              "assignee": "1"
+            }
+          ]
         },
         {
           "id": "DONE",
@@ -107,14 +107,7 @@
         {
           "id": "BACKLOG",
           "title": "Backlog",
-          "tasks": [
-            {
-              "id": "ce2eb823-9dbe-4aa5-897f-dae73b89ca56",
-              "title": "asd",
-              "description": "asd",
-              "assignee": "2"
-            }
-          ]
+          "tasks": []
         },
         {
           "id": "OPEN",
@@ -124,20 +117,7 @@
         {
           "id": "IN_PROGRESS",
           "title": "In Progress",
-          "tasks": [
-            {
-              "id": "111-9dbe-4aa5-897f-dae73b89ca56",
-              "title": "111",
-              "description": "111",
-              "assignee": "1"
-            },
-            {
-              "id": "222-9dbe-4aa5-897f-dae73b89ca56",
-              "title": "222",
-              "description": "222",
-              "assignee": "3"
-            }
-          ]
+          "tasks": []
         },
         {
           "id": "DONE",

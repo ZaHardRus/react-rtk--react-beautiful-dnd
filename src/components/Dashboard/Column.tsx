@@ -25,7 +25,7 @@ export const Column = ({section}: any) => {
                                     provided.draggableProps.style
                                 )}
                                 {...provided.dragHandleProps}>
-                                <Task task={task}/>
+                                <Task task={task} columnId={section.id}/>
                             </Card>
                         )}
                     </Draggable>

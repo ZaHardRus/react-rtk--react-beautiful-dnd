@@ -1,4 +1,4 @@
-import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {createAsyncThunk, createSlice, current, PayloadAction} from "@reduxjs/toolkit";
 import {instance} from "../../../axios/instance";
 import {RootState} from "../../store";
 
@@ -52,6 +52,36 @@ export const moveTask1 = createAsyncThunk(
         }
     },
 )
+export const addTask1 = createAsyncThunk(
+    'boards/addTask1',
+    async (payload: any, {dispatch, getState, rejectWithValue}) => {
+        try {
+            dispatch(addTask(payload))
+            const state: any = getState() as RootState
+            const boardId: string = state.board.active.id
+            const newValue: Array<IBoardSection> = state.board.active.tickets
+            const {data} = await instance.patch(`boards/${boardId}`, {id: boardId, tickets: newValue})
+            return data
+        } catch (e) {
+            return rejectWithValue('Ошибка при запросе всех доски')
+        }
+    },
+)
+export const removeTask1 = createAsyncThunk(
+    'boards/removeTask1',
+    async (payload: any, {dispatch, getState, rejectWithValue}) => {
+        try {
+            dispatch(removeTask(payload))
+            const state: any = getState() as RootState
+            const boardId: string = state.board.active.id
+            const newValue: Array<IBoardSection> = state.board.active.tickets
+            const {data} = await instance.patch(`boards/${boardId}`, {id: boardId, tickets: newValue})
+            return data
+        } catch (e) {
+            return rejectWithValue('Ошибка при запросе всех доски')
+        }
+    },
+)
 
 export const BoardSlice = createSlice({
     name: 'board',
@@ -64,6 +94,39 @@ export const BoardSlice = createSlice({
             const taskToMoveIndex: any = fromSection?.tasks.findIndex(task => task.id === action.payload.taskId);
             const [task]: any = fromSection?.tasks?.splice(taskToMoveIndex, 1);
             toSection?.tasks.splice(action.payload.destination.index, 0, task)
+        },
+        addTask: (state, action) => {
+            state.active.tickets.forEach((column:any)=> {
+                if (column.id === action.payload.id){
+                    column.tasks.push(action.payload.data)
+                }
+            })
+        },
+        removeTask: (state:any, action) => {
+            state.active.tickets = state.active.tickets.map((column:any)=> {
+                if (column.id === action.payload.columnId){
+                    column.tasks = column.tasks.filter((el:any)=>el.id !== action.payload.taskId)
+                }
+                return column
+            })
+
+            // return {
+            //     ...state,
+            //     active: {
+            //         ...state.active,
+            //         tickets: [...state.active.tickets.map((el: any, index: number) => {
+            //             if (el.id !== action.payload.columnId) {
+            //                 return el
+            //             } else {
+            //                 return {
+            //                     ...state.active.tickets[index], tasks: [...state.active.tickets[index].tasks.filter((task: any) => {
+            //                         return task.id !== action.payload.taskId
+            //                     })]
+            //                 }
+            //             }
+            //         })]
+            //     }
+            // }
         }
     },
     extraReducers: {
@@ -107,7 +170,7 @@ export const BoardSlice = createSlice({
     }
 })
 export const boardReducer = BoardSlice.reducer
-export const {moveTask} = BoardSlice.actions
+export const {moveTask, addTask,removeTask} = BoardSlice.actions
 
 interface ITask {
     id: string
